@@ -12,8 +12,6 @@ declare(strict_types=1);
 
 namespace SzepeViktor\WordPress\MyAttackers;
 
-use WP_CLI;
-
 use function current_user_can;
 use function dbDelta;
 use function esc_html__;

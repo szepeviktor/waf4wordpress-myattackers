@@ -32,12 +32,21 @@ final class BlockKnownHostileNetworks
         return $wpdb->get_var($wpdb->prepare(
             'SELECT 1 FROM %i WHERE INET6_ATON(%s) BETWEEN ip_start AND ip_end LIMIT 1',
             $table,
-            $ip
+            $this->normalizeIpToV6($ip)
         )) !== null;
     }
 
     protected function getClientIp(): string
     {
         return $_SERVER['REMOTE_ADDR'] ?? '';
+    }
+
+    protected function normalizeIpToV6(string $ip): string
+    {
+        if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) !== false) {
+            return '::ffff:' . $ip;
+        }
+
+        return $ip;
     }
 }
