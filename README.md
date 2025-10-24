@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+echo "<?php"
+echo "return ["
+git ls-files "*.ipset" | xargs -- grep -h '^add' | while read -r _ network range; do
+  read -r start end < <(iprange -j - <<<"$range" | awk -F- '{e=$1; if(NF==2) e=$2; print $1, e}')
+  printf "    ['%s','%s','%s'],\n" "$start" "$end" "$network"
+done
+echo "];"
+

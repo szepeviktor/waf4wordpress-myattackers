@@ -1,0 +1,18 @@
+includes:
+    - vendor/phpstan/phpstan-strict-rules/rules.neon
+    - vendor/szepeviktor/phpstan-wordpress/extension.neon
+parameters:
+    editorUrlTitle: '%%relFile%%:%%line%%'
+    phpVersion: 80100
+    paths:
+        - waf4wordpress-myattackers.php
+        - src/
+    scanFiles:
+        - vendor/php-stubs/wp-cli-stubs/wp-cli-stubs.php
+#    stubFiles:
+#        - tests/phpstan/wordpress-override.stub
+    level: max
+    inferPrivatePropertyTypeFromConstructor: true
+    ignoreErrors:
+        # WP-CLI accepts a class as callable
+        #- '/^Parameter #2 \$callable of static method WP_CLI::add_command\(\) expects callable\(\): mixed, \S+ given\.$/'
