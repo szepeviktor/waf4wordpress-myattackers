@@ -1,3 +1,8 @@
+# Block known hostile networks
+
+https://github.com/szepeviktor/debian-server-tools/tree/master/security/myattackers-ipsets/ipset
+
+```shell
 #!/usr/bin/env bash
 echo "<?php"
 echo "return ["
@@ -6,4 +11,4 @@ git ls-files "*.ipset" | xargs -- grep -h '^add' | while read -r _ network range
   printf "    ['%s','%s','%s'],\n" "$start" "$end" "$network"
 done
 echo "];"
-
+```
