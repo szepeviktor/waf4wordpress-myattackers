@@ -60,8 +60,8 @@ if (Config::get('version') !== null) {
 
             printf(
                 '<div class="notice notice-warning"><p>%1$s<br>%2$s&nbsp;<code>%3$s</code></p></div>',
-                esc_html__('WAF for WordPress MyAttackers already installed! Please deactivate all but one copies.', 'plugin-slug'),
-                esc_html__('Current plugin path:', 'plugin-slug'),
+                esc_html__('WAF for WordPress MyAttackers already installed! Please deactivate all but one copies.', 'waf4wordpress-myattackers'),
+                esc_html__('Current plugin path:', 'waf4wordpress-myattackers'),
                 esc_html(__FILE__)
             );
         },
@@ -79,7 +79,7 @@ Config::init(
         'filePath' => __FILE__,
         'baseName' => plugin_basename(__FILE__),
         'slug' => 'waf4wordpress-myattackers',
-        'ipRangesPath' => __DIR__.'/data/ip-ranges.php',
+        'ipRangesPath' => __DIR__ . '/data/ip-ranges.php',
         'tableName' => 'waf_myattackers',
     ]
 );

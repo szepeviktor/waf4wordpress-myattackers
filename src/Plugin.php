@@ -1,11 +1,11 @@
 <?php
 
 /**
- * Plugin.php - Procedural part of Plugin Name.
+ * Plugin.php - Procedural part of WAF for WordPress MyAttackers.
  *
- * @author Your Name <username@example.com>
+ * @author Viktor Szépe <viktor@szepe.net>
  * @license GPL-2.0-or-later http://www.gnu.org/licenses/gpl-2.0.txt
- * @link https://example.com/plugin-name
+ * @link https://github.com/szepeviktor/waf4wordpress-myattackers
  */
 
 declare(strict_types=1);
@@ -16,7 +16,6 @@ use function current_user_can;
 use function dbDelta;
 use function esc_html__;
 use function esc_url;
-use function load_plugin_textdomain;
 
 /**
  * Plugin functions.
@@ -31,11 +30,12 @@ class Plugin
     {
         /** @var \wpdb $wpdb */
         global $wpdb;
-        require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+        // phpcs:ignore PSR12NeutronRuleset.Strings.ConcatenationUsage
+        require_once \ABSPATH . 'wp-admin/includes/upgrade.php';
 
         self::uninstall();
 
-        $table = $wpdb->prefix . Config::get('tableName');
+        $table = sprintf('%s%s', $wpdb->prefix, Config::get('tableName'));
         $cc = $wpdb->get_charset_collate();
         $sql = "
 CREATE TABLE `{$table}` (
@@ -60,11 +60,13 @@ CREATE TABLE `{$table}` (
             $params[] = $n;
         }
 
-        $wpdb->query($wpdb->prepare(
-            /** @phpstan-ignore-next-line argument.type */
-            'INSERT INTO ' . $table . ' (ip_start, ip_end, network) VALUES ' . implode(',', $values),
-            $params
-        ));
+        $wpdb->query(
+            $wpdb->prepare(
+                /** @phpstan-ignore-next-line argument.type */
+                sprintf('INSERT INTO %s (ip_start, ip_end, network) VALUES %s', $table, implode(',', $values)),
+                $params
+            )
+        );
     }
 
     /**
@@ -76,7 +78,7 @@ CREATE TABLE `{$table}` (
         if (
             $options['action'] !== 'update'
             || $options['type'] !== 'plugin'
-            || !in_array(Config::get('baseName'), $options['plugins'], true)
+            || ! in_array(Config::get('baseName'), $options['plugins'], true)
         ) {
             return;
         }
@@ -94,8 +96,8 @@ CREATE TABLE `{$table}` (
         /** @var \wpdb $wpdb */
         global $wpdb;
 
-        $table = $wpdb->prefix . Config::get('tableName');
-        $wpdb->query("DROP TABLE IF EXISTS `{$table}`");
+        $table = sprintf('%s%s', $wpdb->prefix, Config::get('tableName'));
+        $wpdb->query($wpdb->prepare('DROP TABLE IF EXISTS %i', $table));
     }
 
     public static function printRequirementsNotice(): void
@@ -128,7 +130,7 @@ CREATE TABLE `{$table}` (
     protected static function normalizeIpToV6(string $ip): string
     {
         if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) !== false) {
-            return '::ffff:' . $ip;
+            return sprintf('::ffff:%s', $ip);
         }
 
         return $ip;

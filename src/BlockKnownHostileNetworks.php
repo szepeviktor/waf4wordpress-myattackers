@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * BlockKnownHostileNetworks.php
+ *
+ * @author Viktor Szépe <viktor@szepe.net>
+ * @license GPL-2.0-or-later http://www.gnu.org/licenses/gpl-2.0.txt
+ * @link https://github.com/szepeviktor/waf4wordpress-myattackers
+ */
+
 declare(strict_types=1);
 
 namespace SzepeViktor\WordPress\MyAttackers;
@@ -11,7 +19,7 @@ final class BlockKnownHostileNetworks
 {
     public function do(): void
     {
-        if (!$this->isBlocked($this->getClientIp())) {
+        if (! $this->isBlocked($this->getClientIp())) {
             return;
         }
 
@@ -27,19 +35,21 @@ final class BlockKnownHostileNetworks
             return false;
         }
 
-        $table = $wpdb->prefix . Config::get('tableName');
+        $table = sprintf('%s%s', $wpdb->prefix, Config::get('tableName'));
 
-        return $wpdb->get_var($wpdb->prepare(
-            'SELECT 1 FROM %i WHERE INET6_ATON(%s) BETWEEN ip_start AND ip_end LIMIT 1',
-            $table,
-            $this->normalizeIpToV6($ip)
-        )) !== null;
+        return $wpdb->get_var(
+            $wpdb->prepare(
+                'SELECT 1 FROM %i WHERE INET6_ATON(%s) BETWEEN ip_start AND ip_end LIMIT 1',
+                $table,
+                $this->normalizeIpToV6($ip)
+            )
+        ) !== null;
     }
 
     protected function getClientIp(): string
     {
-        /** @var string $remoteAddress */
         $remoteAddress = $_SERVER['REMOTE_ADDR'] ?? '';
+        assert(is_string($remoteAddress));
 
         return $remoteAddress;
     }
@@ -47,7 +57,7 @@ final class BlockKnownHostileNetworks
     protected function normalizeIpToV6(string $ip): string
     {
         if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) !== false) {
-            return '::ffff:' . $ip;
+            return sprintf('::ffff:%s', $ip);
         }
 
         return $ip;

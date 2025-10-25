@@ -2,15 +2,12 @@ includes:
     - vendor/phpstan/phpstan-strict-rules/rules.neon
     - vendor/szepeviktor/phpstan-wordpress/extension.neon
 parameters:
-    editorUrlTitle: '%%relFile%%:%%line%%'
+    editorUrl: '%%relFile%%:%%line%%'
+    editorUrlTitle: 'editor %%relFile%%:%%line%%'
     phpVersion: 80100
     paths:
         - waf4wordpress-myattackers.php
         - src/
-    scanFiles:
-        - vendor/php-stubs/wp-cli-stubs/wp-cli-stubs.php
-#    stubFiles:
-#        - tests/phpstan/wordpress-override.stub
     level: max
     inferPrivatePropertyTypeFromConstructor: true
     ignoreErrors:

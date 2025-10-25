@@ -1,11 +1,11 @@
 <?php
 
 /**
- * Config.php
+ * Config.php - Plugin configuration.
  *
- * @author Your Name <username@example.com>
+ * @author Viktor Szépe <viktor@szepe.net>
  * @license GPL-2.0-or-later http://www.gnu.org/licenses/gpl-2.0.txt
- * @link https://example.com/plugin-name
+ * @link https://github.com/szepeviktor/waf4wordpress-myattackers
  */
 
 declare(strict_types=1);

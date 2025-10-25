@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<ruleset name="PluginCodingStyle">
+    <description>This is how we code in this project.</description>
+
+    <config name="minimum_supported_wp_version" value="6.3"/>
+
+    <rule ref="PSR12NeutronRuleset">
+        <!-- NeutronStandard bug -->
+        <exclude name="NeutronStandard.Functions.TypeHint.NoReturnType"/>
+        <!-- https://github.com/sirbrillig/phpcs-import-detection/issues/45 -->
+        <exclude name="ImportDetection.Imports.RequireImports"/>
+        <!-- We write Composer packages -->
+        <exclude name="PEAR.Commenting.FileComment.InvalidPackage"/>
+        <!-- No constant import -->
+        <exclude name="SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnly.ReferenceViaFullyQualifiedName"/>
+    </rule>
+
+    <rule ref="Squiz.Classes.ClassFileName"/>
+
+    <rule ref="WordPress.NamingConventions.PrefixAllGlobals">
+        <properties>
+            <property name="prefixes" type="array">
+                <element value="SzepeViktor"/>
+            </property>
+        </properties>
+    </rule>
+</ruleset>
