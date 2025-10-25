@@ -1,0 +1,6 @@
+.distignore
+.git
+.gitignore
+composer.lock
+phpcs.xml
+phpstan.neon

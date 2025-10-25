@@ -5,7 +5,30 @@ https://github.com/szepeviktor/debian-server-tools/tree/master/security/myattack
 
 You need this plugin if you don't have access to the Linux firewall.
 
+## Requirements
+
+- PHP 8.1+
+- WordPress 6.3+
+
+## Installation
+
+Download the plugin ZIP from [releases](https://github.com/szepeviktor/waf4wordpress-myattackers/releases),
+or use Composer: `composer require szepeviktor/waf4wordpress-myattackers`
+
+## Configuration
+
+There is no configuration at all!
+
+## Usage
+
+On plugin activation IP ranges are imported from the `data/` directory to a database table.
+
+On every WordPress run client IP is being checked against the database.
+See `BlockKnownHostileNetworks::isBlocked`!
+
 ## Conversion shell script
+
+Convert ipsets to PHP arrays.
 
 ```shell
 #!/usr/bin/env bash
