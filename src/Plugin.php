@@ -103,7 +103,7 @@ CREATE TABLE `{$table}` (
     public static function printRequirementsNotice(): void
     {
         // phpcs:ignore Generic.PHP.ForbiddenFunctions.Found
-        error_log('Plugin Name requirements are not met. Please read the Installation instructions.');
+        error_log('WAF for WordPress MyAttackers requirements are not met. Please read the Installation instructions.');
 
         if (! current_user_can('activate_plugins')) {
             return;
@@ -111,10 +111,10 @@ CREATE TABLE `{$table}` (
 
         printf(
             '<div class="notice notice-error"><p>%1$s <a href="%2$s" target="_blank">%3$s</a> %4$s</p></div>',
-            esc_html__('Plugin Name activation failed! Please read', 'plugin-slug'),
-            esc_url('https://github.com/szepeviktor/starter-plugin#installation'),
-            esc_html__('the Installation instructions', 'plugin-slug'),
-            esc_html__('for list of requirements.', 'plugin-slug')
+            esc_html__('WAF for WordPress MyAttackers activation failed! Please read', 'waf4wordpress-myattackers'),
+            esc_url('https://github.com/szepeviktor/waf4wordpress-myattackers'),
+            esc_html__('the Installation instructions', 'waf4wordpress-myattackers'),
+            esc_html__('for list of requirements.', 'waf4wordpress-myattackers')
         );
     }
 

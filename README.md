@@ -1,6 +1,11 @@
 # Block known hostile networks
 
+Blocking known hostile networks is ideally done in the Linux firewall.
 https://github.com/szepeviktor/debian-server-tools/tree/master/security/myattackers-ipsets/ipset
+
+You need this plugin if you don't have access to the Linux firewall.
+
+## Conversion shell script
 
 ```shell
 #!/usr/bin/env bash

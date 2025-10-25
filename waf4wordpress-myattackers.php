@@ -46,32 +46,6 @@ if (! class_exists(Config::class) && is_file(__DIR__ . '/vendor/autoload.php')) 
     require_once __DIR__ . '/vendor/autoload.php';
 }
 
-// Prevent double activation.
-if (Config::get('version') !== null) {
-    add_action(
-        'admin_notices',
-        static function (): void {
-            // phpcs:ignore Generic.PHP.ForbiddenFunctions.Found
-            error_log('WAF for WordPress MyAttackers double activation. Please remove all but one copies. ' . __FILE__);
-
-            if (! current_user_can('activate_plugins')) {
-                return;
-            }
-
-            printf(
-                '<div class="notice notice-warning"><p>%1$s<br>%2$s&nbsp;<code>%3$s</code></p></div>',
-                esc_html__('WAF for WordPress MyAttackers already installed! Please deactivate all but one copies.', 'waf4wordpress-myattackers'),
-                esc_html__('Current plugin path:', 'waf4wordpress-myattackers'),
-                esc_html(__FILE__)
-            );
-        },
-        0,
-        0
-    );
-
-    return;
-}
-
 // Define constant values.
 Config::init(
     [
