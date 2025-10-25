@@ -38,7 +38,10 @@ final class BlockKnownHostileNetworks
 
     protected function getClientIp(): string
     {
-        return $_SERVER['REMOTE_ADDR'] ?? '';
+        /** @var string $remoteAddress */
+        $remoteAddress = $_SERVER['REMOTE_ADDR'] ?? '';
+
+        return $remoteAddress;
     }
 
     protected function normalizeIpToV6(string $ip): string

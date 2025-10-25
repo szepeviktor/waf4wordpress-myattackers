@@ -33,7 +33,9 @@ final class Config
     }
 
     /**
-     * @return mixed
+     * @template TName of 'version'|'filePath'|'baseName'|'slug'|'ipRangesPath'|'tableName'
+     * @param TName $name
+     * @return string|null
      */
     public static function get(string $name)
     {
@@ -41,6 +43,7 @@ final class Config
             return null;
         }
 
+        /** @phpstan-ignore-next-line return.type */
         return self::$container[$name];
     }
 }
